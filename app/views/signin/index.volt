@@ -1,25 +1,34 @@
-<h1>ログイン画面</h1>
-<hr>
-{{ form('/terminal/signin/', 'method': 'post') }}
+<a class="hiddenanchor" id="signup"></a>
+<a class="hiddenanchor" id="signin"></a>
 
-	{% if errorMsg is not empty %}
+<div class="login_wrapper">
+  <div class="animate form login_form">
+    <section class="login_content">
+      {{ form('/terminal/signin/', 'method': 'post') }}
+        <h1>Terminal MS</h1>
 
-		<div class="alert alert-danger">
-			<a class="close" data-dismiss="alert">×</a>
-			{{ errorMsg }}
-		</div>
+				{% if errorMsg is not empty %}
+					<ul class="parsley-errors-list filled" id="parsley-id-5">
+						<li class="parsley-required">{{ errorMsg }}</li>
+					</ul>
+				{% endif %}
 
-	{% endif %}
+        <div>
+          {{ email_field("mail", "class": "form-control", "placeholder": "メールアドレス") }}
+        </div>
+        <div>
+					{{ password_field("password", "class": "form-control", "placeholder": "パスワード", "maxlength": 20) }}
+        </div>
+        <div>
+					{{ submit_button('ログイン', "class": "btn btn-default submit") }}
+          <a class="reset_pass" href="/terminal/password/reissue/">パスワードを再発行</a>
+        </div>
 
-	<div class="form-group">
-		<label for="mail">メールアドレス</label>
-		{{ email_field("mail", "class": "form-control") }}
-	</div>
+        <div class="clearfix"></div>
 
-	<div class="form-group">
-		<label for="password">パスワード</label>
-		{{ password_field("password", "class": "form-control", "maxlength": 20) }}
-	</div>
+        <div class="separator"></div>
 
-	{{ submit_button('ログイン', "class": "btn btn-primary btn-lg btn-block") }}
-{{ end_form() }}
+      {{ end_form() }}
+    </section>
+  </div>
+</div>

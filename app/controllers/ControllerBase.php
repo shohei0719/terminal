@@ -8,10 +8,11 @@ class ControllerBase extends Controller
 
 	protected $_auth_user = '';
 
-    /*
+  /*
 	 * session
 	 */
-	public function _registerSession(Users $user){
+	public function _registerSession(Users $user)
+	{
 		$this->session->set('auth_user', array(
 			'id'    => $user->id,
 			'mail' =>  $user->mail,
@@ -19,29 +20,30 @@ class ControllerBase extends Controller
 		));
 	}
 
-    protected function initialize()
-    {
-		//最後に/がない場合はリダイレクト
-		if(substr($_SERVER['REQUEST_URI'], -1) != '/'){
-			$this->response->redirect($_SERVER['REQUEST_URI'] . '/');
-		}
+  protected function initialize()
+  {
+  	//Viewに管理者情報を渡す
+  	$this->setAuth();
 
-    	//Viewに管理者情報を渡す
-    	$this->setAuth();
-
-    	if(!empty($this->_auth_user)){
+  	if(!empty($this->_auth_user)){
 			$this->view->auth_user_id   = $this->_auth_user['id'];
-    		$this->view->auth_user_name = $this->_auth_user['name'];
-    	}
-    }
+  		$this->view->auth_user_name = $this->_auth_user['name'];
+  	}
+  }
 
-    public function setAuth()
-    {
-    	$this->_auth_user = $this->session->get('auth_user');
-    }
+  public function setAuth()
+  {
+  	$this->_auth_user = $this->session->get('auth_user');
+  }
 
-    public function getAuth()
-    {
-    	return $this->_auth_user;
-    }
+  public function getAuth()
+  {
+  	return $this->_auth_user;
+  }
+
+	public function logMsg($message)
+	{
+		$this->logger->info($_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+		return "[id: " . $this->_auth_user['id'] . ", name: " . $this->_auth_user['name'] . "] " . $message;
+	}
 }

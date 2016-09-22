@@ -10,10 +10,8 @@ class Carriers extends Model
 
     public function initilize()
     {
-
-        //adminsテーブル
+        //carriersテーブル
         $this->setSource('carriers');
-
     }
 
 		/*

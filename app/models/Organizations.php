@@ -10,10 +10,8 @@ class Organizations extends Model
 
     public function initilize()
     {
-
-      //adminsテーブル
+      //organizationsテーブル
       $this->setSource('organizations');
-
     }
 
     /*

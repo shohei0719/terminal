@@ -28,8 +28,8 @@
 }
 
 .header-logo-size {
-	width : 215px;
-	height : 40px;
+	width : 180px;
+	height : 38px;
 }
 /* ヘッダーロゴ */
 
@@ -38,4 +38,18 @@
 }
 .white {
   color:#ffffff;
+}
+
+.margin-left10{
+  margin-left:10px;
+}
+
+.not-allowed{
+	cursor: not-allowed;
+}
+
+.disabled{
+  background-color: #73879C !important;
+  color: #fff !important;
+  pointer-events: none;
 }

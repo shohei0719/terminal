@@ -10,10 +10,8 @@ class Oss extends Model
 
     public function initilize()
     {
-
-      //adminsテーブル
+      //ossテーブル
       $this->setSource('oss');
-
     }
 
     /*

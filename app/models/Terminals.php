@@ -10,23 +10,23 @@ class Terminals extends Model
 
     public function initilize()
     {
-
-        //adminsテーブル
+        //terminalsテーブル
         $this->setSource('terminals');
-
     }
 
     /*
 		 * 検索結果を返す
-		 * @param $permission
+		 * @param $carrier
+		 * @param $maker
+     * @param $os
+     * @param $organization
 		 * @param $name
-		 * @param $mail
 		 * @return $terminals 検索結果
 		 */
 		public function getSearchResult($carrier, $maker, $os, $organization, $name)
 		{
       $criteria = Terminals::query();
-      $criteria->columns('Terminals.id as id, Terminals.name as name, os.name as os_name, version.name as version_name, Terminals.tel, Terminals.mail');
+      $criteria->columns('Terminals.id as terminal_id, Terminals.name as name, os.name as os_name, version.name as version_name, Terminals.tel, Terminals.mail');
       $criteria->leftJoin('Oss', 'os.id = Terminals.os', 'os');
       $criteria->leftJoin('Makers', 'maker.id = Terminals.maker', 'maker');
       $criteria->leftJoin('Versions', 'version.id = Terminals.version', 'version');
@@ -73,18 +73,34 @@ class Terminals extends Model
 		public function getAllResult()
 		{
       $criteria = Terminals::query();
-      $criteria->columns('Terminals.id as id, Terminals.name as name, os.name as os_name, version.name as version_name, carrier.name as carrier_name, maker.name as maker_name, organization.name as organization_name, Terminals.image, Terminals.comment, Terminals.rental_flg');
+      $criteria->columns('Terminals.id as terminal_id,
+                          Terminals.name as name,
+                          Terminals.image,
+                          Terminals.comment,
+                          Terminals.rental_flg,
+                          Terminals.mail,
+                          Terminals.tel,
+                          Terminals.rental_user,
+                          user.name as user_name,
+                          os.name as os_name,
+                          version.name as version_name,
+                          carrier.name as carrier_name,
+                          maker.name as maker_name,
+                          organization.name as organization_name');
+
       $criteria->leftJoin('Oss', 'os.id = Terminals.os', 'os');
       $criteria->leftJoin('Makers', 'maker.id = Terminals.maker', 'maker');
       $criteria->leftJoin('Versions', 'version.id = Terminals.version', 'version');
       $criteria->leftJoin('Carriers', 'carrier.id = Terminals.carrier', 'carrier');
       $criteria->leftJoin('Organizations', 'organization.id = Terminals.organization', 'organization');
+      $criteria->leftJoin('Users', 'user.id = Terminals.rental_user', 'user');
       $criteria->andwhere('Terminals.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
       $criteria->andwhere('os.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
       $criteria->andwhere('maker.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
       $criteria->andwhere('version.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
       $criteria->andwhere('carrier.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
       $criteria->andwhere('organization.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+      $criteria->andwhere('user.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
 
       $terminals = $criteria->execute();
 
@@ -105,4 +121,51 @@ class Terminals extends Model
 
 			return $terminal;
 		}
+
+    /*
+     * IDで検索して端末情報を返す
+     * @param $ids Array
+     * @return $terminals 全結果
+     */
+    public function getIdSearchResult($ids)
+    {
+      $criteria = Terminals::query();
+      $criteria->columns('Terminals.id as terminal_id,
+                          Terminals.name as name,
+                          Terminals.image,
+                          Terminals.comment,
+                          Terminals.rental_flg,
+                          Terminals.mail,
+                          Terminals.tel,
+                          Terminals.rental_user,
+                          user.name as user_name,
+                          os.name as os_name,
+                          version.name as version_name,
+                          carrier.name as carrier_name,
+                          maker.name as maker_name,
+                          organization.name as organization_name');
+
+      $criteria->leftJoin('Oss', 'os.id = Terminals.os', 'os');
+      $criteria->leftJoin('Makers', 'maker.id = Terminals.maker', 'maker');
+      $criteria->leftJoin('Versions', 'version.id = Terminals.version', 'version');
+      $criteria->leftJoin('Carriers', 'carrier.id = Terminals.carrier', 'carrier');
+      $criteria->leftJoin('Organizations', 'organization.id = Terminals.organization', 'organization');
+      $criteria->leftJoin('Users', 'user.id = Terminals.rental_user', 'user');
+
+      $criteria->inWhere('Terminals.id', $ids);
+
+      $criteria->andwhere('Terminals.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+      $criteria->andwhere('os.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+      $criteria->andwhere('maker.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+      $criteria->andwhere('version.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+      $criteria->andwhere('carrier.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+      $criteria->andwhere('organization.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+      $criteria->andwhere('user.delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+
+      $criteria->orderBy('Terminals.id');
+
+      $terminals = $criteria->execute();
+
+			return $terminals;
+    }
 }

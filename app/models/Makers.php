@@ -10,10 +10,8 @@ class Makers extends Model
 
     public function initilize()
     {
-
-        //adminsテーブル
+        //makersテーブル
         $this->setSource('makers');
-
     }
 
 		/*
