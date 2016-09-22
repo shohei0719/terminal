@@ -14,52 +14,52 @@ class Carriers extends Model
         $this->setSource('carriers');
     }
 
-		/*
-		 * 検索結果を返す
-		 * @param $permission
-		 * @param $name
-		 * @param $mail
-		 * @return $carriers 検索結果
-		 */
-		public function getSearchResult($name)
-		{
-			$criteria = Carriers::query();
+    /*
+     * 検索結果を返す
+     * @param $permission
+     * @param $name
+     * @param $mail
+     * @return $carriers 検索結果
+     */
+    public function getSearchResult($name)
+    {
+        $criteria = Carriers::query();
 
-			if(!empty($name)){
-				$criteria->andwhere('name LIKE :name:', ['name' => '%' . $name . '%']);
-			}
+        if(!empty($name)){
+            $criteria->andwhere('name LIKE :name:', ['name' => '%' . $name . '%']);
+        }
 
-			$criteria->andwhere('delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
-			$carriers = $criteria->execute();
+        $criteria->andwhere('delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+        $carriers = $criteria->execute();
 
-			return $carriers;
-		}
+        return $carriers;
+    }
 
-		/*
-		 * 全結果を返す
-		 * @return $carriers 全結果
-		 */
-		public function getAllResult()
-		{
-			$criteria = Carriers::query();
-			$criteria->andwhere('delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
-			$carriers = $criteria->execute();
+    /*
+     * 全結果を返す
+     * @return $carriers 全結果
+     */
+    public function getAllResult()
+    {
+        $criteria = Carriers::query();
+        $criteria->andwhere('delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+        $carriers = $criteria->execute();
 
-			return $carriers;
-		}
+        return $carriers;
+    }
 
-		/*
-		 * IDで検索してキャリア情報を返す
-		 * @param $id
-		 * @return $carrier 全結果
-		 */
-		public function getCarrierInfo($id)
-		{
-			$carrier = Carriers::findFirst(array(
-				"(id = :id:)",
-				'bind' => array('id' => $id)
-			));
+    /*
+     * IDで検索してキャリア情報を返す
+     * @param $id
+     * @return $carrier 全結果
+     */
+    public function getCarrierInfo($id)
+    {
+        $carrier = Carriers::findFirst(array(
+            "(id = :id:)",
+            'bind' => array('id' => $id)
+        ));
 
-			return $carrier;
-		}
+        return $carrier;
+    }
 }

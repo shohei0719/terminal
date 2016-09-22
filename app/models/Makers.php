@@ -14,53 +14,52 @@ class Makers extends Model
         $this->setSource('makers');
     }
 
-		/*
-		 * 検索結果を返す
-		 * @param $permission
-		 * @param $name
-		 * @param $mail
-		 * @return $makers 検索結果
-		 */
-		public function getSearchResult($name)
-		{
-			$criteria = Makers::query();
+    /*
+     * 検索結果を返す
+     * @param $permission
+     * @param $name
+     * @param $mail
+     * @return $makers 検索結果
+     */
+    public function getSearchResult($name)
+    {
+        $criteria = Makers::query();
 
-			if(!empty($name)){
-				$criteria->andwhere('name LIKE :name:', ['name' => '%' . $name . '%']);
-			}
+        if(!empty($name)){
+            $criteria->andwhere('name LIKE :name:', ['name' => '%' . $name . '%']);
+        }
 
-			$criteria->andwhere('delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
-			$makers = $criteria->execute();
+        $criteria->andwhere('delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+        $makers = $criteria->execute();
 
-			return $makers;
-		}
+        return $makers;
+    }
 
-		/*
-		 * 全結果を返す
-		 * @return $makers 全結果
-		 */
-		public function getAllResult()
-		{
-			$criteria = Makers::query();
-			$criteria->andwhere('delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
-			$makers = $criteria->execute();
+    /*
+     * 全結果を返す
+     * @return $makers 全結果
+     */
+    public function getAllResult()
+    {
+        $criteria = Makers::query();
+        $criteria->andwhere('delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+        $makers = $criteria->execute();
 
-			return $makers;
-		}
+        return $makers;
+    }
 
-		/*
-		 * IDで検索してメーカー情報を返す
-		 * @param $id
-		 * @return $maker 全結果
-		 */
-		public function getMakerInfo($id)
-		{
-			$maker = Makers::findFirst(array(
-				"(id = :id:)",
-				'bind' => array('id' => $id)
-			));
+    /*
+     * IDで検索してメーカー情報を返す
+     * @param $id
+     * @return $maker 全結果
+     */
+    public function getMakerInfo($id)
+    {
+        $maker = Makers::findFirst(array(
+            "(id = :id:)",
+            'bind' => array('id' => $id)
+        ));
 
-			return $maker;
-		}
-
+        return $maker;
+    }
 }

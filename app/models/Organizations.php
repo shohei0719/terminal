@@ -23,16 +23,16 @@ class Organizations extends Model
      */
     public function getSearchResult($name)
     {
-      $criteria = Organizations::query();
+        $criteria = Organizations::query();
 
-      if(!empty($name)){
-        $criteria->andwhere('name LIKE :name:', ['name' => '%' . $name . '%']);
-      }
+        if(!empty($name)){
+          $criteria->andwhere('name LIKE :name:', ['name' => '%' . $name . '%']);
+        }
 
-      $criteria->andwhere('delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
-      $organizations = $criteria->execute();
+        $criteria->andwhere('delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+        $organizations = $criteria->execute();
 
-      return $organizations;
+        return $organizations;
     }
 
     /*
@@ -41,11 +41,11 @@ class Organizations extends Model
      */
     public function getAllResult()
     {
-      $criteria = Organizations::query();
-      $criteria->andwhere('delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
-      $organizations = $criteria->execute();
+        $criteria = Organizations::query();
+        $criteria->andwhere('delete_flg = :delete_flg:', ['delete_flg' => $this->getDI()->get('config')->define->valid]);
+        $organizations = $criteria->execute();
 
-      return $organizations;
+        return $organizations;
     }
 
     /*
@@ -55,11 +55,11 @@ class Organizations extends Model
      */
     public function getOrganizationInfo($id)
     {
-      $organization = Organizations::findFirst(array(
-        "(id = :id:)",
-        'bind' => array('id' => $id)
-      ));
+        $organization = Organizations::findFirst(array(
+          "(id = :id:)",
+          'bind' => array('id' => $id)
+        ));
 
-      return $organization;
+        return $organization;
     }
 }
