@@ -80,6 +80,8 @@ $di->set('db', function () use ($config) {
  * Start the session the first time some component request the session service
  */
 $di->set('session', function () {
+	//secure属性(https通信でないとダメなので保留)
+	//ini_set('session.cookie_secure', 1);
 	$session = new SessionAdapter();
 	$session->start();
 	return $session;
