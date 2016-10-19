@@ -20,6 +20,7 @@ class IndexController extends ControllerBase
         //検索結果を取得する
         if($_GET['search']){
             $search = ($_GET['search']);
+//$this->logger->debug($search);
             $this->view->search = $search;
 
             //受け取ったキーワードの全角スペースを半角スペースに変換する

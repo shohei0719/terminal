@@ -9,6 +9,10 @@ class SigninController extends ControllerBase
     public function initialize()
     {
         parent::initialize();
+        if(parent::getAuth()){
+            $this->response->redirect('terminal');
+            $this->logger->info($this->logMsg("ログイン中のためトップ画面へリダイレクトしました。"));
+        }
     }
 
     public function indexAction()

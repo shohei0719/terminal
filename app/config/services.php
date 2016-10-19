@@ -144,7 +144,7 @@ $di->set('dispatcher', function() {
   $eventsManager = new EventsManager();
 
   //Attach a listener
-  $eventsManager->attach("dispatch:beforeException", function(Event $event, $dispatcher, $exception) {
+  $eventsManager->attach("dispatch:beforeException", function($event, $dispatcher, $exception) {
 
     //Handle 404 exceptions
     if ($exception instanceof DispatchException) {

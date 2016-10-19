@@ -27,7 +27,7 @@ class ControllerBase extends Controller
 
       if(!empty($this->_auth_user)){
             $this->view->auth_user_id   = $this->_auth_user['id'];
-          $this->view->auth_user_name = $this->_auth_user['name'];
+            $this->view->auth_user_name = $this->_auth_user['name'];
       }
     }
 

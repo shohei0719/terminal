@@ -1,7 +1,7 @@
 <form action="/terminal/">
 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
   <div class="input-group">
-        <input type="text" name="search" class="form-control" placeholder="検索ワード" value={{search}}>
+        <input type="text" name="search" class="form-control" placeholder="検索ワード" value="{{search|e}}">
         <span class="input-group-btn">
           <button type="submit" class="btn btn-default" type="button">検索</button>
         </span>
@@ -47,11 +47,11 @@
                             <a class="1btn" href="#terminalModal{{cnt}}" data-toggle="modal"><img src={{ image_path }} height="120" width="160" class="1thumbnail"></a>
 
                             <div class="form-group margin-left10">
-                                <h2><a href="#terminalModal{{cnt}}" data-toggle="modal">{{ terminal.name }}</a></h2>
-                                <span class="label label-primary black-background">{{ terminal.maker_name }}</span><br/>
-                                <span class="label label-primary black-background">{{ terminal.carrier_name }}</span><br/>
-                                <span class="label label-primary black-background">{{ terminal.os_name }}&nbsp;{{ terminal.version_name }}</span><br/>
-                                <span class="label label-primary black-background">{{ terminal.organization_name }}</span><br/>
+                                <h2><a href="#terminalModal{{cnt}}" data-toggle="modal">{{ terminal.name|e }}</a></h2>
+                                <span class="label label-primary black-background">{{ terminal.maker_name|e }}</span><br/>
+                                <span class="label label-primary black-background">{{ terminal.carrier_name|e }}</span><br/>
+                                <span class="label label-primary black-background">{{ terminal.os_name|e }}&nbsp;{{ terminal.version_name|e }}</span><br/>
+                                <span class="label label-primary black-background">{{ terminal.organization_name|e }}</span><br/>
                             </div>
 
                         {{ form('terminal/index/edit?id=' ~ terminal.terminal_id, 'method': 'post', 'onsubmit': "return check();") }}
@@ -61,7 +61,7 @@
                                     <div class="col-xs-12">
                                         <div class="form-group">
                                             <label for="comment">Comment:</label>
-                                            <textarea class="form-control input-sm" rows="2" id="comment" name="comment">{{ terminal.comment }}</textarea>
+                                            <textarea class="form-control input-sm" rows="3" id="comment" name="comment">{{ terminal.comment }}</textarea>
                                         </div>
                                     </div>
 
